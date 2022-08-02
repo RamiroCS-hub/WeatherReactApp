@@ -14,6 +14,8 @@ function Input({submitChange}){
         e.preventDefault();
         setInput(null);
         submitChange(input);
+        const inputValue = document.querySelector(".formContainer__input");
+        inputValue.value = "";
     }
 
     return(

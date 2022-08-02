@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import Input from "./Input";
 import WeatherData from "./WeatherData";
 import styles from "../styleSheets/Weather.module.css";
+import Loading from "./Loading";
 
 function Weather ({location,icon,state,temperature}){
 
@@ -27,12 +28,12 @@ function Weather ({location,icon,state,temperature}){
     const onSubmit = (input) =>{
         console.log("entre");
         console.log("el input es:",input);
-        requestManager(input);
+        setTimeout(() => requestManager(input),1000)
         setWeather(null);
     };
 
     useEffect(() => {
-        requestManager();
+        setTimeout(() => requestManager(),1000)
     },[]);
 
     useEffect(() => {
@@ -43,7 +44,7 @@ function Weather ({location,icon,state,temperature}){
             <Input 
                 submitChange={onSubmit} 
             />
-            <WeatherData 
+            {weather ? <WeatherData 
                 location={weather?.location.name}
                 icon={weather?.current.condition.icon}
                 text={weather?.current.condition.text}
@@ -51,7 +52,7 @@ function Weather ({location,icon,state,temperature}){
                 wind={weather?.current.gust_kph}
                 prec={weather?.current.precip_in}
                 hum={weather?.current.humidity}
-            />
+            /> : <Loading />}
         </div>
     )
 }
